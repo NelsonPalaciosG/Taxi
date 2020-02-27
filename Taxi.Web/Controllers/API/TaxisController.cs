@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Taxi.Web.Data;
@@ -42,9 +41,9 @@ namespace Taxi.Web.Controllers.API
 
             if (taxiEntity == null)
             {
-                _context.Taxis.Add(new TaxiEntity { Plaque = plaque });
+                taxiEntity  = new TaxiEntity { Plaque = plaque.ToUpper() };
+                _context.Taxis.Add(taxiEntity);
                 await _context.SaveChangesAsync();
-                taxiEntity = await _context.Taxis.FirstOrDefaultAsync(t => t.Plaque == plaque);
             }
 
             return Ok(_converterHelper.ToTaxiResponse(taxiEntity));
